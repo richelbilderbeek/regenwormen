@@ -7,7 +7,7 @@ bool can_get_tile(const tiles& ts, const int value)
 {
   for (const auto& t: ts)
   {
-    if (get_die_value(t) == value) return true;
+    if (get_value(t) == value) return true;
   }
   return false;
 }

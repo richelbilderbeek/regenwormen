@@ -17,6 +17,23 @@ game_state::game_state(
 
 }
 
+game_state create_test_state_1()
+{
+  // Throws 6 * 3 = 18, only a 1 and worm left, while there is only a 22 available
+  const tiles available_tiles = { tile(22) };
+  const tiles unavailable_tiles = {};
+  const std::vector<tiles> player_tiles = {{}, {}};
+  const dice_selections ds = { dice_selection(die::three, 6) };
+  const dice d = { die::one, die::worm };
+  return game_state(
+    available_tiles,
+    unavailable_tiles,
+    player_tiles,
+    ds,
+    d
+  );
+}
+
 int get_n_dice_left(const game_state& s)
 {
   // There must be no dice on the table, else this is confusing
@@ -31,6 +48,11 @@ int get_n_dice_on_table(const game_state& s) noexcept
   return s.get_dice().size();
 }
 
+int get_n_available_tiles(const game_state& s)
+{
+  return s.get_available_tiles().size();
+}
+
 int get_n_players(const game_state& s) noexcept
 {
   return s.get_player_tiles().size();
@@ -38,6 +60,9 @@ int get_n_players(const game_state& s) noexcept
 
 void game_state::roll_dice(std::mt19937& rng_engine)
 {
+  // Cannot roll dice if there are already dice on the table
+  assert(m_dice.empty());
+
   const int n{get_n_dice_left(*this)};
   m_dice = create_n_random_dice(n, rng_engine);
 }
@@ -90,5 +115,15 @@ void test_game_state()
     g.roll_dice(rng_engine);
     assert(!g.get_dice().empty());
     assert(get_n_dice_on_table(g) == get_n_dice());
+  }
+  // Create the first testing game state,
+  // in which it only makes sense to pick a worm
+  {
+    const auto s = create_test_state_1();
+    assert(get_n_dice_on_table(s) == 2);
+    assert(s.get_dice()[0] == die::one);
+    assert(s.get_dice()[1] == die::worm);
+    assert(get_n_available_tiles(s) == 1);
+    assert(get_value(s.get_available_tiles()[0]) == 22);
   }
 }

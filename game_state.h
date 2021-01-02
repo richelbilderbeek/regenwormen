@@ -38,13 +38,13 @@ public:
   /// Get the tiles that are flipped, thus unavailable
   const auto& get_unavailable_tiles() const noexcept { return m_unavailable_tiles; }
 
-  /// Roll the remainding dice on the table
+  /// Roll the remaining dice on the table
+  /// Throws if there are dice on the table
   void roll_dice(std::mt19937& rng_engine);
 
 private:
   /// The tiles that are still available
   tiles m_available_tiles;
-
 
   /// The zero, one or more selections of dice as already selected in the past
   dice_selections m_dice_selections;
@@ -58,6 +58,12 @@ private:
   /// The tiles that are flipped, thus unavailable
   tiles m_unavailable_tiles;
 };
+
+/// Create a game state in which it only makes sense to pick a worm
+game_state create_test_state_1();
+
+/// Get the number of tiles that are still available
+int get_n_available_tiles(const game_state& s);
 
 /// Determine the number of dice that can still be thrown.
 /// Will throw if dice are already on the table.
