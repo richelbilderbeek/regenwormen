@@ -32,3 +32,6 @@
 *.app
 build-regenwormen-Desktop-Debug/
 *.pro.user
+*.tar.gz
+oclint-0.10.3/
+oclint.log
