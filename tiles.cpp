@@ -46,4 +46,11 @@ void test_tiles()
     const auto tiles = create_all_tiles();
     assert(tiles.size() == 16);
   }
+  // Removing the 21 tile can be done
+  {
+    auto ts = create_all_tiles();
+    assert(ts.size() == 16);
+    remove_tile_with_value(ts, 21);
+    assert(ts.size() == 15);
+  }
 }
