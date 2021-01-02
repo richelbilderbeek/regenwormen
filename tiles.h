@@ -12,6 +12,9 @@ bool can_get_tile(const tiles& ts, const int value);
 /// Create the 16 tiles in the game
 tiles create_all_tiles() noexcept;
 
+/// Get the total number of worms of the tiles
+int get_n_worms(const tiles& ts) noexcept;
+
 /// See if there is a tile with the desired value
 bool has_tile_with_value(const tiles& ts, const int tile_value) noexcept;
 

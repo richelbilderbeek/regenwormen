@@ -4,6 +4,9 @@
 #include "action.h"
 #include "game_state.h"
 
+/// Is there hope for the player to win the game?
+bool can_win(const game_state& s);
+
 /// Create all actions possible
 std::vector<action> create_all_actions();
 

@@ -25,6 +25,17 @@ tiles create_all_tiles() noexcept
   return tiles;
 }
 
+int get_n_worms(const tiles& ts) noexcept
+{
+  using namespace std;
+  int n_worms = 0;
+  for (const auto& t: ts)
+  {
+    n_worms += get_n_worms(t);
+  }
+  return n_worms;
+}
+
 bool has_tile_with_value(const tiles& ts, const int tile_value) noexcept
 {
   using namespace std;
@@ -65,5 +76,10 @@ void test_tiles()
     assert(ts.size() == 16);
     remove_tile_with_value(ts, 21);
     assert(ts.size() == 15);
+  }
+  // The 16 tiles have 4 + 8 + 12 + 16 = 40 worms
+  {
+    const auto tiles = create_all_tiles();
+    assert(get_n_worms(tiles) == 4 + 8 + 12 + 16);
   }
 }

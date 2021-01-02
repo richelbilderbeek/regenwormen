@@ -31,6 +31,10 @@ constexpr auto get_n_worms(const int value) noexcept { return 1 + ((value - 21) 
 /// Helper function
 constexpr auto get_value(const tile& t) noexcept { return t.get_value(); }
 
+/// Get the number of worms on a tile
+// Put non-alphabetically, as it depends on other functions
+constexpr auto get_n_worms(const tile& t) noexcept { return get_n_worms(get_value(t)); }
+
 /// Test the tile class
 void test_tile();
 

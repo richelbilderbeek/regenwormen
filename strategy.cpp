@@ -3,6 +3,47 @@
 #include <algorithm>
 #include <cassert>
 
+bool can_win(const game_state& s)
+{
+  // There is not always hope,
+  // for example, when the one opponent has all tiles except one:
+  // even if the focal player throws the value on the opponent's stack,
+  // the opponent will throw a dice on the next turn and end the game.
+
+  // A definite win or loss, as all tiles are gone
+  if (s.get_available_tiles().empty())
+  {
+    const int n_worms_focal_player = get_n_worms(s.get_player_tiles()[0]);
+    assert(s.get_player_tiles().size() == 2); // One opponent
+    const int n_worms_opponent = get_n_worms(s.get_player_tiles()[1]);
+    return n_worms_focal_player > n_worms_opponent;
+  }
+
+  if (s.get_available_tiles().size() == 1)
+  {
+    // simple, yet exact case
+    // Option 1: take last available tile
+    {
+      const int n_worms_focal_player = get_n_worms(s.get_player_tiles()[0])
+        + get_n_worms(s.get_available_tiles());
+      assert(s.get_player_tiles().size() == 2); // One opponent
+      const int n_worms_opponent = get_n_worms(s.get_player_tiles()[1]);
+      return n_worms_focal_player > n_worms_opponent;
+    }
+
+    // Option 2: take opponents top tile, opponent flips last available tile
+  }
+  else
+  {
+    //STUB
+    //Assume the opponent has only 4s at his/her stack, assume opponent flips all available tiles
+    const int n{get_n_available_tiles(s)};
+    const int n_worms_focal_player = get_n_worms(s.get_player_tiles()[0]) + (4 * n);
+    const int n_worms_opponent = get_n_worms(s.get_player_tiles()[1]) - (4 * n);
+    return n_worms_focal_player > n_worms_opponent;
+  }
+}
+
 std::vector<action> create_all_actions()
 {
   std::vector<action> actions;
@@ -61,5 +102,10 @@ void test_get_best_action()
     // 1: roll dice
     // 1: pass
     assert(static_cast<int>(create_all_valid_actions(s).size()) == 2);
+  }
+  // In the start of the game, there is hope
+  {
+    const game_state s;
+    assert(can_win(s));
   }
 }
