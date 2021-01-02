@@ -1,0 +1,30 @@
+on:
+  push:
+  pull_request:
+
+name: check
+
+jobs:
+  check:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+
+      - name: install OCLint
+        run: ./install_oclint.sh
+
+      - name: qmake
+        run: qmake
+
+      - name: make
+        run: make --silent
+
+      - name: run tests
+        run: ./regenwormen --test
+
+      - name: lint
+        run: ./do_oclint.sh
+
