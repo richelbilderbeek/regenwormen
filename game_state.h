@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include "tiles.h"
+#include "dice_selections.h"
 
 /// The state of a game
 class game_state
@@ -15,11 +16,19 @@ public:
   game_state(
     const tiles& available_tiles = create_all_tiles(),
     const tiles& unavailable_tiles = {},
-    const std::vector<tiles> player_tiles = {{}, {}}
+    const std::vector<tiles> player_tiles = {{}, {}},
+    const dice_selections& ds = {},
+    const dice& d = {}
   );
 
   /// Get the tiles that are still available
   const auto& get_available_tiles() const noexcept { return m_available_tiles; }
+
+  /// Get the zero, one or more selections of dice as already selected in the past
+  const auto& get_dice_selections() const noexcept { return m_dice_selections; }
+
+  /// Get the current dice thrown on the table
+  const auto& get_dice() const noexcept { return m_dice; }
 
   /// Get the tiles that the players have.
   const auto& get_player_tiles() const noexcept { return m_player_tiles; }
@@ -30,6 +39,13 @@ public:
 private:
   /// The tiles that are still available
   tiles m_available_tiles;
+
+
+  /// The zero, one or more selections of dice as already selected in the past
+  dice_selections m_dice_selections;
+
+  /// The current dice thrown on the table
+  dice m_dice;
 
   /// The tiles of each player
   std::vector<tiles> m_player_tiles;
