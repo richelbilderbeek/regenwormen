@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++20
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -16,11 +16,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dice.cpp \
+    dice_roll.cpp \
+    die.cpp \
+    game.cpp \
     main.cpp \
-    game_dialog.cpp
+    game_dialog.cpp \
+    turn.cpp \
+    turns.cpp
 
 HEADERS += \
-    game_dialog.h
+    dice.h \
+    dice_roll.h \
+    die.h \
+    game.h \
+    game_dialog.h \
+    turn.h \
+    turns.h
 
 FORMS += \
     game_dialog.ui

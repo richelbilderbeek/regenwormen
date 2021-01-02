@@ -1,3 +1,5 @@
+#include "game.h"
+
 #include "game_dialog.h"
 
 #include <iostream>
@@ -5,7 +7,7 @@
 
 void test()
 {
-  assert(1 == 2);
+  test_game();
 }
 
 int main(int argc, char *argv[])
