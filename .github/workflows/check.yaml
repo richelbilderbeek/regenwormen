@@ -13,9 +13,6 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
 
-      - name: Allow Qt to run on GHA
-        run: sudo apt --quiet install libxkbcommon0 libxkbcommon-x11-0
-
       - name: Install Codecov
         run: sudo pip install codecov
 
