@@ -1,12 +1,13 @@
 #include "tiles.h"
 
+#include <algorithm>
 #include <cassert>
 
 bool can_get_tile(const tiles& ts, const int value)
 {
   for (const auto& t: ts)
   {
-    if (get_value(t) == value) return true;
+    if (get_die_value(t) == value) return true;
   }
   return false;
 }
@@ -22,6 +23,20 @@ tiles create_all_tiles() noexcept
   }
   assert(tiles.size() == 16);
   return tiles;
+}
+
+void remove_tile_with_value(
+  tiles& ts,
+  const int value
+)
+{
+  using namespace std;
+  const auto iter = remove_if(
+    begin(ts), end(ts),
+    [value](const auto& t) { return value == t.get_value(); }
+  );
+  assert(iter != end(ts));
+  ts.erase(iter, end(ts));
 }
 
 void test_tiles()

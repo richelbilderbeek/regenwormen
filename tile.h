@@ -29,7 +29,7 @@ constexpr auto get_n_worms(const int value) noexcept { return 1 + ((value - 21) 
 
 /// Get the value on a tile
 /// Helper function
-constexpr auto get_value(const tile& t) noexcept { return t.get_value(); }
+constexpr auto get_die_value(const tile& t) noexcept { return t.get_value(); }
 
 /// Test the tile class
 void test_tile();

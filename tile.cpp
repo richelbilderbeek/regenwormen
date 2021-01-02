@@ -39,6 +39,6 @@ void test_tile()
   {
     const int value{get_lowest_tile_value()};
     const tile t(value);
-    assert(get_value(t) == value);
+    assert(get_die_value(t) == value);
   }
 }

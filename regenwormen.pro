@@ -18,7 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     dice.cpp \
-    dice_roll.cpp \
+    dice_selection.cpp \
+    dice_selections.cpp \
     die.cpp \
     game.cpp \
     main.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
 
 HEADERS += \
     dice.h \
-    dice_roll.h \
+    dice_selection.h \
+    dice_selections.h \
     die.h \
     game.h \
     game_dialog.h \

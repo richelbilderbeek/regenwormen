@@ -1,6 +1,7 @@
 #include "game.h"
 #include "tiles.h"
 
+#include <algorithm>
 #include <cassert>
 
 game::game()
@@ -9,10 +10,20 @@ game::game()
 
 }
 
+void game::do_turn(const turn& t)
+{
+  remove_tile_with_value(
+    this->m_tiles,
+    t.get_picked_tile_value()
+  );
+  m_turns.push_back(t);
+}
+
 bool can_get_tile(const game& g, const int value)
 {
   return can_get_tile(g.get_tiles(), value);
 }
+
 
 void test_game()
 {
@@ -30,5 +41,14 @@ void test_game()
   {
     const game g;
     assert(can_get_tile(g, get_lowest_tile_value()));
+  }
+  // After a turn in which a tile is taken, that tile is unavailable
+  {
+    game g;
+    const auto value = get_lowest_tile_value();
+    assert(can_get_tile(g, value));
+    const turn t = create_test_turn(value);
+    g.do_turn(t);
+    assert(!can_get_tile(g, value));
   }
 }

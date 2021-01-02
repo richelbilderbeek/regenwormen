@@ -11,6 +11,7 @@ public:
   game();
   const auto& get_turns() const noexcept { return m_turns; }
   const auto& get_tiles() const noexcept { return m_tiles; }
+  void do_turn(const turn& t);
 
 private:
   turns m_turns;
