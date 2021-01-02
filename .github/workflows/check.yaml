@@ -13,6 +13,9 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
 
+      - name: Install Codecov
+        run: sudo pip install codecov
+
       - name: install OCLint
         run: ./install_oclint.sh
 
@@ -24,6 +27,12 @@ jobs:
 
       - name: run tests
         run: ./regenwormen --test
+
+      - name: Measure codecov
+        run: |
+          ./get_code_cov.sh >/dev/null
+          codecov >/dev/null
+          bash <(curl -s https://codecov.io/bash)
 
       - name: lint
         run: ./do_oclint.sh
