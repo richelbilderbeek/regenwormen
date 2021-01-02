@@ -3,6 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++20
+QMAKE_CXXFLAGS += -std=c++2a
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -22,6 +23,8 @@ SOURCES += \
     game.cpp \
     main.cpp \
     game_dialog.cpp \
+    tile.cpp \
+    tiles.cpp \
     turn.cpp \
     turns.cpp
 
@@ -31,6 +34,8 @@ HEADERS += \
     die.h \
     game.h \
     game_dialog.h \
+    tile.h \
+    tiles.h \
     turn.h \
     turns.h
 

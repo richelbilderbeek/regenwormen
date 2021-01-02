@@ -1,4 +1,5 @@
 #include "game.h"
+#include "tiles.h"
 
 #include "game_dialog.h"
 
@@ -7,6 +8,8 @@
 
 void test()
 {
+  test_tile();
+  test_tiles();
   test_game();
 }
 
