@@ -114,6 +114,15 @@ void game_state::roll_dice(std::mt19937& rng_engine)
   m_dice = create_n_random_dice(n, rng_engine);
 }
 
+void game_state::roll_dice(const dice& ds)
+{
+  // Cannot roll dice if there are already dice on the table
+  assert(m_dice.empty());
+  assert(count_n_dice(m_dice_selections) + static_cast<int>(ds.size()) == get_n_dice());
+
+  m_dice = ds;
+}
+
 void test_game_state()
 {
   // The initial state has all tiles available
@@ -173,7 +182,7 @@ void test_game_state()
     const game_state s;
     assert(!can_do_action(s, create_pick_tile_action()));
   }
-  // One can roll the dice
+  // One can roll the dice by chance
   {
     std::mt19937 rng_engine;
     game_state g;
@@ -181,6 +190,17 @@ void test_game_state()
     assert(!has_dice_on_table(g));
     assert(get_n_dice_on_table(g) == 0);
     g.roll_dice(rng_engine);
+    assert(!g.get_dice().empty());
+    assert(has_dice_on_table(g));
+    assert(get_n_dice_on_table(g) == get_n_dice());
+  }
+  // One can magically roll the dice
+  {
+    game_state g;
+    assert(g.get_dice().empty());
+    assert(!has_dice_on_table(g));
+    assert(get_n_dice_on_table(g) == 0);
+    g.roll_dice(std::vector<die>(8, die::worm));
     assert(!g.get_dice().empty());
     assert(has_dice_on_table(g));
     assert(get_n_dice_on_table(g) == get_n_dice());

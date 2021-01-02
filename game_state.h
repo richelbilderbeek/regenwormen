@@ -44,6 +44,12 @@ public:
   /// Throws if there are dice on the table
   void roll_dice(std::mt19937& rng_engine);
 
+  /// 'Roll' the remaining dice on the table, making them magically land to this collection of die symbols
+  /// Throws if there are dice on the table,
+  /// or if the total number of dice (i.e. rolled in this function and those already selected)
+  /// does not match the number of dice in the game
+  void roll_dice(const dice& ds);
+
 private:
   /// The tiles that are still available
   tiles m_available_tiles;
