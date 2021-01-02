@@ -17,6 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    action.cpp \
+    action_type.cpp \
     dice.cpp \
     dice_selection.cpp \
     dice_selections.cpp \
@@ -31,6 +33,8 @@ SOURCES += \
     turns.cpp
 
 HEADERS += \
+    action.h \
+    action_type.h \
     dice.h \
     dice_selection.h \
     dice_selections.h \

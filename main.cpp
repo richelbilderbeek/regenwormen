@@ -1,3 +1,4 @@
+#include "action.h"
 #include "dice_selection.h"
 #include "dice_selections.h"
 #include "game.h"
@@ -23,6 +24,8 @@ void test()
   test_turn();
   test_game_state();
   test_game();
+  test_action_type();
+  test_action();
 }
 
 int main(int argc, char *argv[])
