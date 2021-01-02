@@ -4,6 +4,16 @@
 
 #include <cassert>
 
+int count_n_dice(const dice_selections& dss) noexcept
+{
+  int n{0};
+  for (const auto& ds: dss)
+  {
+    n += get_size(ds);
+  }
+  return n;
+}
+
 dice_selections create_test_dice_selections(const int value)
 {
   constexpr int min_value{1 * get_min_dice_value()};
@@ -60,7 +70,25 @@ void test_dice_selections()
   }
   // No worms is no value
   {
-    const dice_selections ds(1, dice_selection(die::one, 1));
-    assert(get_total_value(ds) == 0);
+    const dice_selections dss(1, dice_selection(die::one, 1));
+    assert(get_total_value(dss) == 0);
+  }
+  // An empty set of dice selections has zero dice
+  {
+    const dice_selections dss;
+    assert(count_n_dice(dss) == 0);
+  }
+  // A set of one dice selection of one dice has one dice
+  {
+    const dice_selections dss(1, dice_selection(die::one, 1));
+    assert(count_n_dice(dss) == 1);
+  }
+  // A set of two dice selection of two dice has four dice
+  {
+    const dice_selections dss = {
+      dice_selection(die::one, 2),
+      dice_selection(die::two, 2),
+    };
+    assert(count_n_dice(dss) == 4);
   }
 }

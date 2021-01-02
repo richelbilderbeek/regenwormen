@@ -1,6 +1,26 @@
 #include "die.h"
 
 #include <cassert>
+#include <random>
+
+die create_random_die(std::mt19937& rng_engine)
+{
+  std::uniform_int_distribution d(0, 5);
+  return static_cast<die>(d(rng_engine));
+}
+
+std::vector<die> get_all_die_symbols() noexcept
+{
+  return
+  {
+    die::one,
+    die::two,
+    die::three,
+    die::four,
+    die::five,
+    die::worm
+  };
+}
 
 die get_die_with_value(const int value)
 {
@@ -26,4 +46,14 @@ void test_die()
   static_assert (get_die_value(die::four) == 4, "a four has a value of 4");
   static_assert (get_die_value(die::five) == 5, "a five has a value of 5");
   static_assert (get_die_value(die::worm) == 5, "a worm has a value of 5");
+  // One can roll each symbol, will freeze the program if this fails
+  {
+    const auto all_die_symbols{get_all_die_symbols()};
+    assert(all_die_symbols.size() == 6);
+    std::mt19937 rng_engine;
+    for (const auto d: all_die_symbols)
+    {
+      while (create_random_die(rng_engine) != d) {}
+    }
+  }
 }

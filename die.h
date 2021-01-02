@@ -1,12 +1,21 @@
 #ifndef DIE_H
 #define DIE_H
 
+#include <random>
+#include <vector>
+
 /// One 'regenwormen' die.
 /// Use the 'dice' class for a collection of dice.
 enum class die
 {
   one, two, three, four, five, worm
 };
+
+/// Create one randomly rolled die, 'throw a die'
+die create_random_die(std::mt19937& rng_engine);
+
+/// Get all the six different die symbols
+std::vector<die> get_all_die_symbols() noexcept;
 
 /// Get a die with the correct value
 /// Will return die::five for a value of 5

@@ -7,6 +7,9 @@
 /// A collection of dice rolls
 using dice_selections = std::vector<dice_selection>;
 
+/// Count the number of dice in all selections combined
+int count_n_dice(const dice_selections& dss) noexcept;
+
 /// Create any valid collection of dice selections
 /// to get to a specific total value.
 /// Will throw if the value cannot be reached, e.g. 1 and 100

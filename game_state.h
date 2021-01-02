@@ -1,8 +1,10 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include "tiles.h"
 #include "dice_selections.h"
+#include "tiles.h"
+
+#include <random>
 
 /// The state of a game
 class game_state
@@ -36,6 +38,9 @@ public:
   /// Get the tiles that are flipped, thus unavailable
   const auto& get_unavailable_tiles() const noexcept { return m_unavailable_tiles; }
 
+  /// Roll the remainding dice on the table
+  void roll_dice(std::mt19937& rng_engine);
+
 private:
   /// The tiles that are still available
   tiles m_available_tiles;
@@ -53,6 +58,13 @@ private:
   /// The tiles that are flipped, thus unavailable
   tiles m_unavailable_tiles;
 };
+
+/// Determine the number of dice that can still be thrown.
+/// Will throw if dice are already on the table.
+int get_n_dice_left(const game_state& s);
+
+/// Get the number of dice currently on the table
+int get_n_dice_on_table(const game_state& s) noexcept;
 
 /// Get the number of players
 int get_n_players(const game_state& s) noexcept;
