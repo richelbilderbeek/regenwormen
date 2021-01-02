@@ -1,6 +1,15 @@
 #include "tiles.h"
+
 #include <cassert>
 
+bool can_get_tile(const tiles& ts, const int value)
+{
+  for (const auto& t: ts)
+  {
+    if (get_value(t) == value) return true;
+  }
+  return false;
+}
 
 tiles create_all_tiles() noexcept
 {

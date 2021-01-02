@@ -15,8 +15,10 @@ public:
 private:
   turns m_turns;
   tiles m_tiles;
-
 };
+
+/// Is a tile with a specific value still available?
+bool can_get_tile(const game& g, const int value);
 
 /// Test the game class
 void test_game();

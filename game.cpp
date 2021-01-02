@@ -9,6 +9,11 @@ game::game()
 
 }
 
+bool can_get_tile(const game& g, const int value)
+{
+  return can_get_tile(g.get_tiles(), value);
+}
+
 void test_game()
 {
   // A new game has had no turns yet
@@ -20,5 +25,10 @@ void test_game()
   {
     const game g;
     assert(g.get_tiles().size() == 16);
+  }
+  // In a new game, the tile with the lowest value is available
+  {
+    const game g;
+    assert(can_get_tile(g, get_lowest_tile_value()));
   }
 }
