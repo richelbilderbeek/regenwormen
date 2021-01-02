@@ -1,6 +1,7 @@
 #include "dice_selection.h"
 #include "dice_selections.h"
 #include "game.h"
+#include "game_state.h"
 #include "tiles.h"
 #include "turn.h"
 
@@ -20,6 +21,7 @@ void test()
   test_dice_selection();
   test_dice_selections();
   test_turn();
+  test_game_state();
   test_game();
 }
 

@@ -22,6 +22,7 @@ SOURCES += \
     dice_selections.cpp \
     die.cpp \
     game.cpp \
+    game_state.cpp \
     main.cpp \
     game_dialog.cpp \
     tile.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     die.h \
     game.h \
     game_dialog.h \
+    game_state.h \
     tile.h \
     tiles.h \
     turn.h \

@@ -45,9 +45,9 @@ void test_game()
   // After a turn in which a tile is taken, that tile is unavailable
   {
     game g;
-    const auto value = get_lowest_tile_value();
+    const auto value{get_lowest_tile_value()};
     assert(can_get_tile(g, value));
-    const turn t = create_test_turn(value);
+    const auto t{create_test_turn(value)};
     g.do_turn(t);
     assert(!can_get_tile(g, value));
   }
