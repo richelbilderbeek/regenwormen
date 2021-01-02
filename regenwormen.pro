@@ -27,6 +27,7 @@ SOURCES += \
     game_state.cpp \
     main.cpp \
     game_dialog.cpp \
+    strategy.cpp \
     tile.cpp \
     tiles.cpp \
     turn.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     game.h \
     game_dialog.h \
     game_state.h \
+    strategy.h \
     tile.h \
     tiles.h \
     turn.h \

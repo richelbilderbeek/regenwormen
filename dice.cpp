@@ -1,5 +1,6 @@
 #include "dice.h"
 
+#include <algorithm>
 #include <cassert>
 
 dice create_n_random_dice(const int n, std::mt19937& rng_engine)
@@ -10,6 +11,12 @@ dice create_n_random_dice(const int n, std::mt19937& rng_engine)
     ds.push_back(create_random_die(rng_engine));
   }
   return ds;
+}
+
+bool has_die_with_symbol(const dice& d, const die symbol)
+{
+  using namespace std;
+  return count(begin(d), end(d), symbol);
 }
 
 void test_dice()

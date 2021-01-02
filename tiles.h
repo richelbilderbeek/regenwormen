@@ -12,6 +12,9 @@ bool can_get_tile(const tiles& ts, const int value);
 /// Create the 16 tiles in the game
 tiles create_all_tiles() noexcept;
 
+/// See if there is a tile with the desired value
+bool has_tile_with_value(const tiles& ts, const int tile_value) noexcept;
+
 /// Remove a tile with a certain value
 void remove_tile_with_value(
   tiles& ts,

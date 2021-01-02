@@ -25,6 +25,19 @@ tiles create_all_tiles() noexcept
   return tiles;
 }
 
+bool has_tile_with_value(const tiles& ts, const int tile_value) noexcept
+{
+  using namespace std;
+  return count_if(
+    begin(ts),
+    end(ts),
+    [tile_value](const auto& t)
+    {
+      return t.get_value() == tile_value;
+    }
+  );
+}
+
 void remove_tile_with_value(
   tiles& ts,
   const int value

@@ -1,4 +1,5 @@
 #include "game_state.h"
+#include "action.h"
 
 #include <cassert>
 
@@ -15,6 +16,26 @@ game_state::game_state(
     m_unavailable_tiles{unavailable_tiles}
 {
 
+}
+
+bool can_do_action(const game_state& s, const action& a)
+{
+  // One can always give up
+  if (a.get_type() == action_type::pass) return true;
+
+  // One can roll if there are no dice on the table yet
+  if (a.get_type() == action_type::roll_dice) return !has_dice_on_table(s);
+
+  // One can select dice if that symbol is on the table
+  if (a.get_type() == action_type::select_dice) return has_die_with_symbol(s.get_dice(), a.get_die());
+
+  assert(a.get_type() == action_type::pick_tile);
+
+  // Cannot pick a value higher than the value (no worms means zero value) of the current dice selections
+  if (get_total_value(s.get_dice_selections()) < a.get_tile_value()) return false;
+
+  // 'Obtainable' means either available, or at the top of the other player(s)' stacks
+  return has_obtainable_tile_with_value(s, a.get_tile_value());
 }
 
 game_state create_test_state_1()
@@ -56,6 +77,32 @@ int get_n_available_tiles(const game_state& s)
 int get_n_players(const game_state& s) noexcept
 {
   return s.get_player_tiles().size();
+}
+
+bool has_available_tile_with_value(const game_state& s, const int tile_value)
+{
+  return has_tile_with_value(s.get_available_tiles(), tile_value);
+}
+
+bool has_dice_on_table(const game_state& s) noexcept
+{
+  return get_n_dice_on_table(s) > 0;
+}
+
+
+bool has_obtainable_tile_with_value(const game_state& s, const int tile_value)
+{
+  // 'Obtainable' means either available, or at the top of the other player(s)' stacks
+  if (has_available_tile_with_value(s, tile_value)) return true;
+
+  // See if the other players have it...
+  const int n_players{get_n_players(s)};
+  assert(n_players > 1);
+  for (int i = 1; i != n_players; ++i) // Start at 1, as focal player is at index 0
+  {
+    if (s.get_player_tiles()[i].back().get_value() == tile_value) return true;
+  }
+  return false;
 }
 
 void game_state::roll_dice(std::mt19937& rng_engine)
@@ -106,14 +153,36 @@ void test_game_state()
     const game_state s;
     assert(get_n_dice_left(s) == get_n_dice());
   }
+  // In the initial state, one can roll the dice
+  {
+    const game_state s;
+    assert(can_do_action(s, create_roll_dice_action()));
+  }
+  // In the initial state, one can already pass, say 'your turn'
+  {
+    const game_state s;
+    assert(can_do_action(s, create_pass_action()));
+  }
+  // In the initial state, before rolling the dice, one cannot select a certain die
+  {
+    const game_state s;
+    assert(!can_do_action(s, create_select_dice_action()));
+  }
+  // In the initial state, before rolling the dice, one cannot pick a certain tile to take
+  {
+    const game_state s;
+    assert(!can_do_action(s, create_pick_tile_action()));
+  }
   // One can roll the dice
   {
     std::mt19937 rng_engine;
     game_state g;
     assert(g.get_dice().empty());
+    assert(!has_dice_on_table(g));
     assert(get_n_dice_on_table(g) == 0);
     g.roll_dice(rng_engine);
     assert(!g.get_dice().empty());
+    assert(has_dice_on_table(g));
     assert(get_n_dice_on_table(g) == get_n_dice());
   }
   // Create the first testing game state,

@@ -6,6 +6,8 @@
 
 #include <random>
 
+class action;
+
 /// The state of a game
 class game_state
 {
@@ -59,6 +61,9 @@ private:
   tiles m_unavailable_tiles;
 };
 
+/// Is it valid to do this action?
+bool can_do_action(const game_state& s, const action& a);
+
 /// Create a game state in which it only makes sense to pick a worm
 game_state create_test_state_1();
 
@@ -74,6 +79,19 @@ int get_n_dice_on_table(const game_state& s) noexcept;
 
 /// Get the number of players
 int get_n_players(const game_state& s) noexcept;
+
+/// See if there is an available tile of a certain value.
+/// 'Available' means the tiles on the table, not those at the other player's stacks.
+/// Use 'has_obtainable_tile_with_value' to see if a tile may be at the top
+/// of other players' stacks
+bool has_available_tile_with_value(const game_state& s, const int tile_value);
+
+/// See if there is an obtainable tile of a certain value.
+/// 'Obtainable' means either available, or at the top of the other player(s)' stacks
+bool has_obtainable_tile_with_value(const game_state& s, const int tile_value);
+
+/// See if there are dice currently on the table
+bool has_dice_on_table(const game_state& s) noexcept;
 
 /// Test the game_state class
 void test_game_state();

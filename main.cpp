@@ -5,7 +5,7 @@
 #include "game_state.h"
 #include "tiles.h"
 #include "turn.h"
-
+#include "strategy.h"
 #include "game_dialog.h"
 
 #include <iostream>
@@ -26,6 +26,7 @@ void test()
   test_game();
   test_action_type();
   test_action();
+  test_get_best_action();
 }
 
 int main(int argc, char *argv[])

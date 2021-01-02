@@ -14,6 +14,9 @@ dice create_n_random_dice(const int n, std::mt19937& rng_engine);
 /// The number of dice used in the game
 constexpr int get_n_dice() noexcept { return 8; }
 
+/// Determine if there is a die with the desired symbol amongst the dice
+bool has_die_with_symbol(const dice& d, const die symbol);
+
 /// Test the dice class
 void test_dice();
 
