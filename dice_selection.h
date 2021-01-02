@@ -56,4 +56,8 @@ constexpr bool has_worms(const dice_selection& r) noexcept { return get_die(r) =
 /// Test the DICE_SELECTION class
 void test_dice_selection();
 
+std::string to_str(const dice_selection& ds);
+
+std::ostream& operator<<(std::ostream& os, const dice_selection& ds);
+
 #endif // DICE_SELECTION_H

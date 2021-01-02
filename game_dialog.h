@@ -7,6 +7,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class game_dialog; }
 QT_END_NAMESPACE
 
+class game_state;
+
 class game_dialog : public QDialog
 {
   Q_OBJECT
@@ -14,6 +16,7 @@ class game_dialog : public QDialog
 public:
   game_dialog(QWidget *parent = nullptr);
   ~game_dialog();
+  void show_state(const game_state& s);
 
 private:
   Ui::game_dialog *ui;

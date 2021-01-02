@@ -1,6 +1,9 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include <iosfwd>
+#include <string>
+
 /// A tile
 class tile
 {
@@ -37,5 +40,9 @@ constexpr auto get_n_worms(const tile& t) noexcept { return get_n_worms(get_valu
 
 /// Test the tile class
 void test_tile();
+
+std::string to_str(const tile& t);
+
+std::ostream& operator<<(std::ostream& os, const tile& t);
 
 #endif // TILE_H

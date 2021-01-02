@@ -1,6 +1,7 @@
 #ifndef DIE_H
 #define DIE_H
 
+#include <iosfwd>
 #include <random>
 #include <vector>
 
@@ -48,5 +49,10 @@ constexpr int get_die_value(const die d) noexcept
 
 /// Test the die class
 void test_die();
+
+/// Convert a symbol to a string
+std::string to_str(const die d) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const die d) noexcept;
 
 #endif // DIE_H

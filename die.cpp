@@ -36,6 +36,27 @@ die get_die_with_value(const int value)
   }
 }
 
+std::string to_str(const die d) noexcept
+{
+  switch (d)
+  {
+    case die::one: return "1";
+    case die::two: return "2";
+    case die::three: return "3";
+    case die::four: return "4";
+    case die::five: return "5";
+    case die::worm:
+    default:
+      return "W";
+  }
+}
+
+std::ostream& operator<<(std::ostream& os, const die d) noexcept
+{
+  os << to_str(d);
+  return os;
+}
+
 void test_die()
 {
   static_assert (get_min_dice_value() == 1, "the one is the lowest symbol on a die");

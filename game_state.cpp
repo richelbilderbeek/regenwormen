@@ -2,6 +2,8 @@
 #include "action.h"
 
 #include <cassert>
+#include <iterator>
+#include <sstream>
 
 game_state::game_state(
   const tiles& available_tiles,
@@ -123,6 +125,55 @@ void game_state::roll_dice(const dice& ds)
   m_dice = ds;
 }
 
+std::string to_str(const game_state& s) noexcept
+{
+  using namespace std;
+  std::stringstream ss;
+  ss << "Dice on the table: ";
+  {
+    const auto& ds = s.get_dice();
+    copy(begin(ds), end(ds), ostream_iterator<die>(ss, " "));
+  }
+  ss << '\n';
+  ss << "Dice already selected: ";
+  {
+    const auto& ds = s.get_dice_selections();
+    copy(begin(ds), end(ds), ostream_iterator<dice_selection>(ss, " "));
+  }
+  ss << '\n';
+  ss << "Available tiles: ";
+  {
+    const auto& ts = s.get_available_tiles();
+    copy(begin(ts), end(ts), ostream_iterator<tile>(ss, " "));
+  }
+  ss << '\n';
+  ss << "Unavailable tiles: ";
+  {
+    const auto& ts = s.get_unavailable_tiles();
+    copy(begin(ts), end(ts), ostream_iterator<tile>(ss, " "));
+  }
+  ss << '\n';
+  ss << "Focal player stack: ";
+  {
+    const auto& ts = s.get_player_tiles()[0];
+    copy(begin(ts), end(ts), ostream_iterator<tile>(ss, " "));
+  }
+  ss << '\n';
+  assert(s.get_player_tiles().size() == 2); // For now
+  ss << "Opponent stack: ";
+  {
+    const auto& ts = s.get_player_tiles()[1];
+    copy(begin(ts), end(ts), ostream_iterator<tile>(ss, " "));
+  }
+  return ss.str();
+}
+
+std::ostream& operator<<(std::ostream& os, const game_state& s) noexcept
+{
+  os << to_str(s);
+  return os;
+}
+
 void test_game_state()
 {
   // The initial state has all tiles available
@@ -216,3 +267,4 @@ void test_game_state()
     assert(get_value(s.get_available_tiles()[0]) == 22);
   }
 }
+

@@ -1,11 +1,25 @@
 #include "tile.h"
 
 #include <cassert>
+#include <sstream>
 
 tile::tile(const int value)
   : m_value{value}
 {
 
+}
+
+std::string to_str(const tile& t)
+{
+  std::stringstream ss;
+  ss << get_value(t) << " (" << get_n_worms(t) << " worms)";
+  return ss.str();
+}
+
+std::ostream& operator<<(std::ostream& os, const tile& t)
+{
+  os << to_str(t);
+  return os;
 }
 
 void test_tile()

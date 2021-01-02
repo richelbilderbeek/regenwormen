@@ -4,6 +4,7 @@
 #include "dice_selections.h"
 #include "tiles.h"
 
+#include <iosfwd>
 #include <random>
 
 class action;
@@ -101,5 +102,10 @@ bool has_dice_on_table(const game_state& s) noexcept;
 
 /// Test the game_state class
 void test_game_state();
+
+/// Convert to a (multi-line string)
+std::string to_str(const game_state& s) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const game_state& s) noexcept;
 
 #endif // GAME_STATE_H

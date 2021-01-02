@@ -4,6 +4,8 @@
 #include "action_type.h"
 #include "die.h"
 
+#include <iosfwd>
+
 /// An action to apply to a game_state
 class action
 {
@@ -56,5 +58,9 @@ constexpr action create_select_dice_action(const die d = die::worm)
 
 /// Test the action class
 void test_action();
+
+std::string to_str(const action& a) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const action& a) noexcept;
 
 #endif // ACTION_H
