@@ -266,5 +266,12 @@ void test_game_state()
     assert(get_n_available_tiles(s) == 1);
     assert(get_value(s.get_available_tiles()[0]) == 22);
   }
+  //operator<<
+  {
+    const game_state s;
+    std::stringstream ss;
+    ss << s;
+    assert(!ss.str().empty());
+  }
 }
 
