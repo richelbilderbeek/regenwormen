@@ -145,5 +145,4 @@ void test_probability()
       + calc_p_x_same_of_n_dice(8, 8)
     )
   );
-
 }

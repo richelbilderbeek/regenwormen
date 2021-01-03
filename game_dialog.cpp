@@ -1,6 +1,6 @@
 #include "game_state.h"
 #include "strategy.h"
-
+#include "dice_occurances.h"
 #include "game_dialog.h"
 #include "ui_game_dialog.h"
 
@@ -46,6 +46,7 @@ void game_dialog::show_state(const game_state& s)
   copy(begin(as), end(as), ostream_iterator<action>(ss, "\n"));
   ss << "\n\n";
 
+  // calc_p_x_same_of_n_dice
   ss
     << std::string(80, '-') << '\n'
     << "calc_p_x_same_of_n_dice, chance to have x the same from n dice:\n"
@@ -60,7 +61,19 @@ void game_dialog::show_state(const game_state& s)
     ss << '\n';
   }
 
-
+  // create_all_dice_occurances
+  ss
+    << std::string(80, '-') << '\n'
+    << "create_all_dice_occurances:\n"
+    << std::string(80, '-') << '\n'
+  ;
+  {
+    const auto doss = create_all_dice_occurances();
+    for (const auto& dos: doss)
+    {
+      ss << dos << '\n';
+    }
+  }
 
   this->ui->edit->setPlainText(QString::fromStdString(ss.str()));
 

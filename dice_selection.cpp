@@ -29,4 +29,19 @@ void test_dice_selection()
   static_assert(!has_worm(dice_selection(die::one, 1)));
   static_assert(get_summed_value(dice_selection(die::one, 1)) == 1);
   static_assert(get_summed_value(dice_selection(die::worm, 2)) == 10);
+  // create_test_dice_selection
+  {
+    const auto ds = create_test_dice_selection(die::worm, 8);
+    assert(has_worm(ds));
+    assert(ds.get_size() == 8);
+  }
+  {
+    assert(to_str(dice_selection(die::one, 2)) == "2x 1");
+    assert(to_str(dice_selection(die::worm, 3)) == "3x W");
+  }
+  {
+    std::stringstream s;
+    s << dice_selection(die::two, 3);
+    assert(s.str() == "3x 2");
+  }
 }
