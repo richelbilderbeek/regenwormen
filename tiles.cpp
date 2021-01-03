@@ -82,4 +82,10 @@ void test_tiles()
     const auto ts = create_all_tiles();
     assert(get_n_worms(ts) == 4 + 8 + 12 + 16);
   }
+  // has_tile_with_value
+  {
+    const auto ts = create_all_tiles();
+    assert(has_tile_with_value(ts, 21));
+    assert(!has_tile_with_value(ts, 1)); // Tile with a one does not exists
+  }
 }

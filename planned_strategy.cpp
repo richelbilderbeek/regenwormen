@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <sstream>
 
 planned_strategy::planned_strategy(const dice& ds)
   : m_dice{ds}
@@ -275,5 +276,29 @@ void test_planned_strategy()
       + (get_n_worms(40) * calc_p_x_same_of_n_dice(8, 8)) // Tile value of 40 has 4 worms
     };
     assert(created == expected);
+  }
+  // Calculate the payoff per dice
+  {
+    const game_state gs;
+    const auto payoff_per_dice = calc_payoff(gs);
+    assert(payoff_per_dice.find(die::one)->second > 0.0);
+    assert(payoff_per_dice.find(die::two)->second > 0.0);
+    assert(payoff_per_dice.find(die::three)->second > 0.0);
+    assert(payoff_per_dice.find(die::four)->second > 0.0);
+    assert(payoff_per_dice.find(die::five)->second > 0.0);
+    assert(payoff_per_dice.find(die::worm)->second > 0.0);
+    assert(payoff_per_dice.find(die::worm)->second > payoff_per_dice.find(die::one)->second);
+  }
+  // to_str
+  {
+    const planned_strategy ps( { die::worm } );
+    assert(to_str(ps) == "W");
+  }
+  // operator<<
+  {
+    const planned_strategy ps( { die::worm } );
+    std::stringstream s;
+    s << ps;
+    assert(s.str() == to_str(ps));
   }
 }
