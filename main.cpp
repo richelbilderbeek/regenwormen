@@ -1,4 +1,6 @@
 #include "action.h"
+#include "dice_occurance.h"
+#include "dice_occurances.h"
 #include "dice_selection.h"
 #include "dice_selections.h"
 #include "game.h"
@@ -20,6 +22,8 @@ void test()
   // the root cause of an error can be found more easily
   test_probability();
   test_probabilities();
+  test_dice_occurance();
+  test_dice_occurances();
   test_die();
   test_dice();
   test_tile();

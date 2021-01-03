@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <random>
+#include <sstream>
 
 die create_random_die(std::mt19937& rng_engine)
 {
@@ -76,5 +77,20 @@ void test_die()
     {
       while (create_random_die(rng_engine) != d) {}
     }
+  }
+  // to_str
+  {
+    assert(to_str(die::one) == "1");
+    assert(to_str(die::two) == "2");
+    assert(to_str(die::three) == "3");
+    assert(to_str(die::four) == "4");
+    assert(to_str(die::five) == "5");
+    assert(to_str(die::worm) == "W");
+  }
+  // to_str
+  {
+    std::stringstream s;
+    s << die::one;
+    assert(s.str() == "1");
   }
 }

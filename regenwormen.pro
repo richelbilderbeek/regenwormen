@@ -20,6 +20,8 @@ SOURCES += \
     action.cpp \
     action_type.cpp \
     dice.cpp \
+    dice_occurance.cpp \
+    dice_occurances.cpp \
     dice_selection.cpp \
     dice_selections.cpp \
     die.cpp \
@@ -40,6 +42,8 @@ HEADERS += \
     action.h \
     action_type.h \
     dice.h \
+    dice_occurance.h \
+    dice_occurances.h \
     dice_selection.h \
     dice_selections.h \
     die.h \
