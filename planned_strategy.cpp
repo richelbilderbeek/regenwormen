@@ -89,7 +89,7 @@ void test_planned_strategy()
     assert(p.find(0)->second == 1.0);
   }
   // When selecting only a worm,
-  // there is:
+  // the probabilities of each tile value is easy to calculate
   //
   {
     const game_state gs;
@@ -106,5 +106,60 @@ void test_planned_strategy()
     assert(p.find(30)->second == calc_p_x_same_of_n_dice(6, 8));
     assert(p.find(35)->second == calc_p_x_same_of_n_dice(7, 8));
     assert(p.find(40)->second == calc_p_x_same_of_n_dice(8, 8));
+  }
+  // When determined to play a worm, then a 5,
+  // the probabilities of each tile value is harder to calculate
+  //
+  {
+    const game_state gs;
+    const planned_strategy ps( { die::worm, die::five } );
+    const auto p = calc_probabilities(gs, ps);
+    const auto sum_p = sum_probabilities(p);
+    assert(is_approx_one(sum_p));
+    assert(p.find(0)->second > 0.0);
+    assert(p.find(1) == std::end(p));
+    assert(p.find(5)->second > 0.0);
+    assert(p.find(10)->second > 0.0);
+    assert(p.find(15)->second > 0.0);
+    assert(p.find(20)->second > 0.0);
+    assert(p.find(25)->second > 0.0);
+    assert(p.find(30)->second > 0.0);
+    assert(p.find(35)->second > 0.0);
+    assert(p.find(40)->second > 0.0);
+  }
+  // When determined to play a worm, then a 5, then a 4
+  // the probabilities of each tile value is harder to calculate
+  //
+  {
+    const game_state gs;
+    const planned_strategy ps( { die::worm, die::five, die::four } );
+    const auto p = calc_probabilities(gs, ps);
+    const auto sum_p = sum_probabilities(p);
+    assert(is_approx_one(sum_p));
+    assert(p.find(0)->second > 0.0);
+    assert(p.find(1) == std::end(p));
+    assert(p.find(2) == std::end(p));
+    assert(p.find(3) == std::end(p));
+    assert(p.find(4)->second > 0.0);
+    assert(p.find(5)->second > 0.0);
+    assert(p.find(6) == std::end(p));
+    assert(p.find(7) == std::end(p));
+    assert(p.find(8)->second > 0.0);
+    assert(p.find(9)->second > 0.0);
+    assert(p.find(10)->second > 0.0);
+    assert(p.find(11) == std::end(p));
+    assert(p.find(12)->second > 0.0);
+    assert(p.find(13) == std::end(p));
+    assert(p.find(14)->second > 0.0);
+    assert(p.find(15)->second > 0.0);
+    assert(p.find(16)->second > 0.0);
+    assert(p.find(17) == std::end(p));
+    assert(p.find(18)->second > 0.0);
+    assert(p.find(19)->second > 0.0);
+    assert(p.find(20)->second > 0.0);
+    assert(p.find(25)->second > 0.0);
+    assert(p.find(30)->second > 0.0);
+    assert(p.find(35)->second > 0.0);
+    assert(p.find(40)->second > 0.0);
   }
 }

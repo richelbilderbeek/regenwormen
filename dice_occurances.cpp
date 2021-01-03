@@ -33,6 +33,7 @@ int calc_tile_value(
 )
 {
   assert(has_worm(ds));
+  if (dos.back() == 0) return 0;
   assert(ds.size() == dos.size());
   int tile_value = 0;
   const int n = ds.size();
@@ -64,7 +65,13 @@ std::vector<dice_occurances> create_all_dice_occurances_for_n_throws(const int n
     std::begin(all_doss),
     std::end(all_doss),
     std::back_inserter(doss),
-    [n](const auto& dos) { return static_cast<int>(dos.size()) == n; }
+    [n](const auto& dos)
+    {
+      //Keep if
+      return static_cast<int>(dos.size()) == n //it matches the number of throws
+        || (static_cast<int>(dos.size()) <= n && dos.back() == 0) // the turn is ended
+      ;
+    }
   );
   return doss;
 
@@ -250,6 +257,20 @@ void test_dice_occurances()
   {
     const auto dos = create_all_dice_occurances_for_n_throws(1);
     assert(dos.size() == 9);
+  }
+  // create_all_dice_occurances_for_n_throws
+  // It may land 0, 1, 2, 3, 4, 5, 6, 7 or 8 times the first die symbol.
+  // If there were zero occurances of the desired die symbol, the turn is over.
+  // Else, it may land 0, 1, 2, 3, 4, 5, 6, 7 or 8 times for second die symbol,
+  // if the sum is at most the number of dice
+  //
+  {
+    const auto doss = create_all_dice_occurances_for_n_throws(2);
+    const dice_occurances dos = { 0 };
+    assert(
+      std::count(std::begin(doss), std::end(doss), dos) == 1
+    );
+    assert(doss.size() == 37);
   }
 
 }

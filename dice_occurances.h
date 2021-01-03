@@ -62,8 +62,9 @@ std::vector<dice_occurances> create_all_dice_occurances();
 
 /// Create all the valid dice occurances that when having decided to throw times
 /// For example, if the player has decided upon 1 throw,
-/// it may land 1, 2, 3, 4, 5, 6, 7 or 8 times that die symbol
-///
+/// it may land 0, 1, 2, 3, 4, 5, 6, 7 or 8 times that die symbol
+/// For two or more throws, it may be possible to have 0 times the
+/// desired die symbol in the first roll.
 std::vector<dice_occurances> create_all_dice_occurances_for_n_throws(const int n);
 
 /// The number of dice occurrances must sum up to the number of dice (which is 8)
