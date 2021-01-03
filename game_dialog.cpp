@@ -61,20 +61,38 @@ void game_dialog::show_state(const game_state& s)
     ss << '\n';
   }
 
-  // create_all_dice_occurances
+  // create all dice occurances and their probabilities
   ss
     << std::string(80, '-') << '\n'
-    << "create_all_dice_occurances:\n"
+    << "dice occurances (i.e. dice with the same symbol) and their probabilities:\n"
     << std::string(80, '-') << '\n'
   ;
   {
     const auto doss = create_all_dice_occurances();
     for (const auto& dos: doss)
     {
-      ss << dos << '\n';
+      std::string line = to_str(dos);
+      // Trim to length 20
+      line += std::string(20 - line.size(), ' ');
+      line += std::to_string(get_probability(dos));
+      ss << line << '\n';
     }
   }
 
+  // Show all permutations
+  ss
+    << std::string(80, '-') << '\n'
+    << "show all permutations:\n"
+    << std::string(80, '-') << '\n'
+  ;
+  {
+    const auto streaks = get_all_permutations();
+    for (const auto& ds: streaks)
+    {
+      ss << ds << '\n';
+    }
+
+  }
   this->ui->edit->setPlainText(QString::fromStdString(ss.str()));
 
 }

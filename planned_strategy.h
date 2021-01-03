@@ -22,6 +22,8 @@ private:
 /// Calculate the probabilities to obtain each value for a pre-planned strategy
 probabilities calc_probabilities(const game_state& gs, const planned_strategy& ps);
 
+
+
 /// Is there a die symbols selection with a worm?
 /// If not, it is 100% expected to obtain a value of zero
 bool has_worm(const planned_strategy& ps);
