@@ -60,14 +60,24 @@ std::ostream& operator<<(std::ostream& os, const die d) noexcept
 
 void test_die()
 {
-  static_assert (get_min_dice_value() == 1, "the one is the lowest symbol on a die");
-  static_assert (get_max_dice_value() == 5, "a worm also has a value of 5");
-  static_assert (get_die_value(die::one) == 1, "a one has a value of 1");
-  static_assert (get_die_value(die::two) == 2, "a two has a value of 2");
-  static_assert (get_die_value(die::three) == 3, "a three has a value of 3");
-  static_assert (get_die_value(die::four) == 4, "a four has a value of 4");
-  static_assert (get_die_value(die::five) == 5, "a five has a value of 5");
-  static_assert (get_die_value(die::worm) == 5, "a worm has a value of 5");
+  static_assert(get_min_dice_value() == 1, "the one is the lowest symbol on a die");
+  static_assert(get_max_dice_value() == 5, "a worm also has a value of 5");
+  static_assert(get_die_value(die::one) == 1, "a one has a value of 1");
+  static_assert(get_die_value(die::two) == 2, "a two has a value of 2");
+  static_assert(get_die_value(die::three) == 3, "a three has a value of 3");
+  static_assert(get_die_value(die::four) == 4, "a four has a value of 4");
+  static_assert(get_die_value(die::five) == 5, "a five has a value of 5");
+  static_assert(get_die_value(die::worm) == 5, "a worm has a value of 5");
+  // get_die_value (run-time, for codecov)
+  {
+    assert(get_die_value(die::one) == 1);
+    assert(get_die_value(die::two) == 2);
+    assert(get_die_value(die::three) == 3);
+    assert(get_die_value(die::four) == 4);
+    assert(get_die_value(die::five) == 5);
+    assert(get_die_value(die::worm) == 5);
+
+  }
   // get_die_with_value
   {
     assert(get_die_with_value(1) == die::one);
