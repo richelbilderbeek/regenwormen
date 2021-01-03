@@ -36,4 +36,8 @@ void test_dice()
     const dice d = create_n_random_dice(n, rng_engine);
     assert(static_cast<int>(d.size()) == n);
   }
+  // Get all the permutations for n dice
+  {
+    get_all_permutations_for_n_dice(const int n);
+
 }

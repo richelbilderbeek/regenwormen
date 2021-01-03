@@ -6,37 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1237</width>
+    <height>801</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>game_dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPlainTextEdit{
+  font-family: &quot;monospace&quot;;
+  font-size: 20px
+}</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>State</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPlainTextEdit" name="edit_state">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Possible actions</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPlainTextEdit" name="edit_actions">
+    <widget class="QPlainTextEdit" name="edit">
      <property name="readOnly">
       <bool>true</bool>
      </property>

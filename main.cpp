@@ -6,6 +6,7 @@
 #include "tiles.h"
 #include "turn.h"
 #include "strategy.h"
+#include "planned_strategy.h"
 #include "game_dialog.h"
 
 #include <iostream>
@@ -27,6 +28,7 @@ void test()
   test_action_type();
   test_action();
   test_get_best_action();
+  test_planned_strategy();
 }
 
 int main(int argc, char *argv[])

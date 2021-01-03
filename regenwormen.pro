@@ -27,6 +27,9 @@ SOURCES += \
     game_state.cpp \
     main.cpp \
     game_dialog.cpp \
+    planned_strategy.cpp \
+    probabilities.cpp \
+    probability.cpp \
     strategy.cpp \
     tile.cpp \
     tiles.cpp \
@@ -43,6 +46,9 @@ HEADERS += \
     game.h \
     game_dialog.h \
     game_state.h \
+    planned_strategy.h \
+    probabilities.h \
+    probability.h \
     strategy.h \
     tile.h \
     tiles.h \
@@ -56,3 +62,11 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+# Compile with high warning levels, a warning is an error
+QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Weffc++ -Werror
+
+# gcov
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+LIBS += -lgcov
+

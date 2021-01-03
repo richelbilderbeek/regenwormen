@@ -11,6 +11,9 @@ using dice = std::vector<die>;
 /// Create a number of random dice
 dice create_n_random_dice(const int n, std::mt19937& rng_engine);
 
+/// Get all the permutations for n dice
+std::vector<dice> get_all_permutations_for_n_dice(const int n);
+
 /// The number of dice used in the game
 constexpr int get_n_dice() noexcept { return 8; }
 
