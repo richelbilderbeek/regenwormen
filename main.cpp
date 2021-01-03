@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
   #else
   std::cout << "Release mode\n";
   assert(1 == 2); //No tests in release mode
+  // Calculate the payoffs per dice value for initial state
+  // PROFILE const austd::map<die,double> calc_payoff(const game_state& gs) HERE :-)
   #endif
 
   if (argc == 2 && std::string(argv[1]) == "--test") return 0;
