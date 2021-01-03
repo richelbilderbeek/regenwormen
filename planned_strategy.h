@@ -21,8 +21,14 @@ private:
   dice m_dice;
 };
 
+/// Calculate the expected payoff for each die symbol before rolling the dice.
+/// It does so by creating all possible planned strategies,
+/// and summing their payoffs per each first picked die
+std::map<die,double> calc_payoff(const game_state& gs);
+
 /// Calculate the expected payoff by playing a certain set strategy in a certain game state
 double calc_payoff(const game_state& gs, const planned_strategy& ps);
+
 
 /// Calculate the probabilities to obtain each value for a pre-planned strategy
 probabilities calc_probabilities(const game_state& gs, const planned_strategy& ps);

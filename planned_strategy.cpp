@@ -12,6 +12,25 @@ planned_strategy::planned_strategy(const dice& ds)
 
 }
 
+std::map<die,double> calc_payoff(const game_state& gs)
+{
+  // Set payoffs to zero
+  std::map<die,double> payoffs;
+  for (const auto d: get_all_die_symbols()) { payoffs.insert(std::pair(d, 0.0));}
+
+  // Get all the planned stratgies
+  const auto pss = get_all_planned_strategies();
+
+  // Split the payoff according to the first die
+  for (const auto& ps: pss)
+  {
+    assert(!ps.get_dice().empty());
+    const die first_die = ps.get_dice()[0];
+    payoffs[first_die] += calc_payoff(gs, ps);
+  }
+  return payoffs;
+}
+
 double calc_payoff(const game_state& gs, const planned_strategy& ps)
 {
   const probabilities probs = calc_probabilities(gs, ps);

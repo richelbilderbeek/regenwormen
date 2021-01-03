@@ -93,6 +93,7 @@ void game_dialog::show_state(const game_state& s)
       ss << ds << '\n';
     }
   }
+
   // Show all planned_strategies (which re-shows the permutations) and their expected payoff
   ss
     << std::string(80, '-') << '\n'
@@ -110,7 +111,26 @@ void game_dialog::show_state(const game_state& s)
       line += std::to_string(calc_payoff(gs, ps));
       ss << line << '\n';
     }
-
   }
+
+  // Show all payoffs per first dice symbol picked
+  ss
+    << std::string(80, '-') << '\n'
+    << "Show all payoffs per first dice symbol picked:\n"
+    << std::string(80, '-') << '\n'
+  ;
+  {
+    const game_state gs; // Initial game state
+    const auto payoffs = calc_payoff(gs);
+    for (const auto& p: payoffs)
+    {
+      std::string line = to_str(p.first);
+      // Trim to length 5
+      line += std::string(5 - line.size(), ' ');
+      line += std::to_string(p.second);
+      ss << line << '\n';
+    }
+  }
+
   this->ui->edit->setPlainText(QString::fromStdString(ss.str()));
 }
