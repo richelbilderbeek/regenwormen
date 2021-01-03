@@ -50,7 +50,7 @@ bool has_rolled_worms(const dice_selections& rs) noexcept
 {
   for (const auto& r: rs)
   {
-    if (has_worms(r)) return true;
+    if (has_worm(r)) return true;
   }
   return false;
 }

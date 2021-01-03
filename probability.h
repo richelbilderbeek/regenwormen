@@ -31,6 +31,12 @@ constexpr bool is_approx_one(double x)
   return x > 0.999999999 && x < 1.000000001;
 }
 
+/// Determine if the number if approximately 1.0
+constexpr bool x_is_approx_y(double x, double y)
+{
+  return x - y > -0.000000001 && x - y < 0.000000001;
+}
+
 /// Calculate the expected probability
 /// to have x times the same symbol when
 /// throwing n dice

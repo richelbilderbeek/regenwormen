@@ -35,6 +35,11 @@ bool has_die_with_symbol(const dice& d, const die symbol)
   return count(begin(d), end(d), symbol);
 }
 
+bool has_worm(const dice& ds) noexcept
+{
+  return has_die_with_symbol(ds, die::worm);
+}
+
 void test_dice()
 {
   static_assert(get_n_dice() == 8);

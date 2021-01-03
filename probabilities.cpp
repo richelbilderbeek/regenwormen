@@ -4,7 +4,8 @@
 #include <cassert>
 #include <numeric>
 
-bool probabilities_sum_up_to_approx_one(const probabilities& ps)
+// When summing the probabilities, this is approximately one
+bool sum_ps_is_approx_one(const probabilities& ps)
 {
   return is_approx_one(sum_probabilities(ps));
 }
@@ -31,10 +32,10 @@ void test_probabilities()
   }
   // probabilities_sum_up_to_approx_one
   {
-    assert(!probabilities_sum_up_to_approx_one({{1, 0.99}}));
-    assert( probabilities_sum_up_to_approx_one({{1, 1.0}}));
-    assert( probabilities_sum_up_to_approx_one({{1, 0.1}, {2, 0.9}}));
-    assert( probabilities_sum_up_to_approx_one({{1, 0.1}, {2, 0.2}, {3, 0.7}}));
-    assert( probabilities_sum_up_to_approx_one({{1, 0.1}, {2, 0.2}, {3, 0.3}, {4, 0.4}}));
+    assert(!sum_ps_is_approx_one({{1, 0.99}}));
+    assert( sum_ps_is_approx_one({{1, 1.0}}));
+    assert( sum_ps_is_approx_one({{1, 0.1}, {2, 0.9}}));
+    assert( sum_ps_is_approx_one({{1, 0.1}, {2, 0.2}, {3, 0.7}}));
+    assert( sum_ps_is_approx_one({{1, 0.1}, {2, 0.2}, {3, 0.3}, {4, 0.4}}));
   }
 }

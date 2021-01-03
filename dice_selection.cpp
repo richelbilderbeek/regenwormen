@@ -25,8 +25,8 @@ void test_dice_selection()
 {
   static_assert(get_size(dice_selection(die::worm, 2)) == 2);
   static_assert(get_die(dice_selection(die::worm, 2)) == die::worm);
-  static_assert(has_worms(dice_selection(die::worm, 2)));
-  static_assert(!has_worms(dice_selection(die::one, 1)));
+  static_assert(has_worm(dice_selection(die::worm, 2)));
+  static_assert(!has_worm(dice_selection(die::one, 1)));
   static_assert(get_summed_value(dice_selection(die::one, 1)) == 1);
   static_assert(get_summed_value(dice_selection(die::worm, 2)) == 10);
 }

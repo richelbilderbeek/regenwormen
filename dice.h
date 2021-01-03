@@ -17,6 +17,9 @@ std::vector<dice> get_all_permutations();
 /// The number of dice used in the game
 constexpr int get_n_dice() noexcept { return 8; }
 
+/// Are there a worm in this collection of die symbols?
+bool has_worm(const dice& ds) noexcept;
+
 /// Determine if there is a die with the desired symbol amongst the dice
 bool has_die_with_symbol(const dice& d, const die symbol);
 

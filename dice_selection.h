@@ -51,7 +51,7 @@ constexpr int get_summed_value(const dice_selection& r) noexcept
 
 
 /// Does this dice roll has worms?
-constexpr bool has_worms(const dice_selection& r) noexcept { return get_die(r) == die::worm; }
+constexpr bool has_worm(const dice_selection& r) noexcept { return get_die(r) == die::worm; }
 
 /// Test the DICE_SELECTION class
 void test_dice_selection();
