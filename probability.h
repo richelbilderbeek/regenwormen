@@ -28,7 +28,7 @@ constexpr double int_pow(double p, unsigned int n)
 /// Determine if the number if approximately 1.0
 constexpr bool is_approx_one(double x)
 {
-  return x > 0.999999999 && x < 1.000000001;
+  return x > 0.99 && x < 1.01;
 }
 
 /// Determine if the number if approximately 1.0

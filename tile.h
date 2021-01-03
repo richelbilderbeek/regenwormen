@@ -28,7 +28,16 @@ constexpr int get_highest_tile_value() { return 36; }
 
 /// Get the number of worms on a tile
 /// This function assumes a correct value, else returns nonsense
-constexpr auto get_n_worms(const int value) noexcept { return 1 + ((value - 21) / 4); }
+constexpr auto get_n_worms(const int value) noexcept {
+  return value < 21
+    ? 0 // Below the value 21, there are no tiles with worms
+    : (
+        value > 36
+        ? 4 // Above the value 36, one can get 4 worms by taking a tile with value, e.g., 36
+        : 1 + ((value - 21) / 4)
+      )
+    ;
+}
 
 /// Get the value on a tile
 /// Helper function

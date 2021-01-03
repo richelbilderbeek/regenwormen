@@ -62,9 +62,9 @@ void test_probability()
   static_assert(calc_p_x_same_of_n_dice(3, 4) == int_pow(1.0 / 6.0, 3) * int_pow(5.0 / 6.0, 1) * 4);
   static_assert(calc_p_x_same_of_n_dice(4, 4) == int_pow(1.0 / 6.0, 4) * int_pow(5.0 / 6.0, 0) * 1);
 
-  static_assert(!is_approx_one(0.999));
+  static_assert(!is_approx_one(0.9));
   static_assert( is_approx_one(1.000));
-  static_assert(!is_approx_one(1.001));
+  static_assert(!is_approx_one(1.1));
 
   static_assert(!x_is_approx_y(0.999, 1.0));
   static_assert( x_is_approx_y(1.000, 1.0));

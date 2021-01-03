@@ -67,9 +67,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-# Compile with high warning levels, a warning is an error
-QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror
-
 # Debug and release mode
 CONFIG += debug_and_release
 
@@ -94,4 +91,7 @@ CONFIG(debug, debug|release) {
     QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
     LIBS += -lgcov
   }
+
+  # Compile with high warning levels, a warning is an error
+  QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror
 }

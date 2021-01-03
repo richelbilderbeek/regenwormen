@@ -26,6 +26,11 @@ void test_tile()
 {
   static_assert(get_lowest_tile_value() == 21);
   static_assert(get_highest_tile_value() == 36);
+  static_assert(get_n_worms(0) == 0);
+  static_assert(get_n_worms(5) == 0);
+  static_assert(get_n_worms(10) == 0);
+  static_assert(get_n_worms(15) == 0);
+  static_assert(get_n_worms(20) == 0);
   static_assert(get_n_worms(21) == 1);
   static_assert(get_n_worms(22) == 1);
   static_assert(get_n_worms(23) == 1);

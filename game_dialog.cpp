@@ -4,6 +4,7 @@
 #include "game_dialog.h"
 #include "ui_game_dialog.h"
 
+#include "planned_strategy.h"
 #include "probability.h"
 
 #include <sstream>
@@ -91,8 +92,25 @@ void game_dialog::show_state(const game_state& s)
     {
       ss << ds << '\n';
     }
+  }
+  // Show all planned_strategies (which re-shows the permutations) and their expected payoff
+  ss
+    << std::string(80, '-') << '\n'
+    << "Show all (useful) planned strategies:\n"
+    << std::string(80, '-') << '\n'
+  ;
+  {
+    const game_state gs; // Initial game state
+    const auto pss = get_all_planned_strategies();
+    for (const auto& ps: pss)
+    {
+      std::string line = to_str(ps);
+      // Trim to length 30
+      line += std::string(30 - line.size(), ' ');
+      line += std::to_string(calc_payoff(gs, ps));
+      ss << line << '\n';
+    }
 
   }
   this->ui->edit->setPlainText(QString::fromStdString(ss.str()));
-
 }

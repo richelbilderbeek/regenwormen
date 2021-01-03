@@ -3,12 +3,28 @@
 #include "probability.h"
 #include "dice_occurances.h"
 
+#include <algorithm>
 #include <cassert>
 
 planned_strategy::planned_strategy(const dice& ds)
   : m_dice{ds}
 {
 
+}
+
+double calc_payoff(const game_state& gs, const planned_strategy& ps)
+{
+  const probabilities probs = calc_probabilities(gs, ps);
+  assert(gs.get_available_tiles().size() == 16);
+  // Payoff = SUM(probabilty * number of worms)
+  double payoff{0.0};
+  for (const auto& prob: probs)
+  {
+    const int tile_value{prob.first};
+    const double p{prob.second};
+    payoff += (p * get_n_worms(tile_value));
+  }
+  return payoff;
 }
 
 probabilities calc_probabilities(const game_state& gs, const planned_strategy& ps)
@@ -63,9 +79,35 @@ probabilities calc_probabilities(const game_state& gs, const planned_strategy& p
   return probs;
 }
 
+std::vector<planned_strategy> get_all_planned_strategies()
+{
+  // A (useful) combination of dice symbols to play
+  const auto dcs = get_all_useful_permutations();
+  std::vector<planned_strategy> pss;
+  pss.reserve(dcs.size());
+  std::transform(
+    std::begin(dcs),
+    std::end(dcs),
+    std::back_inserter(pss),
+    [](const dice& d) { return planned_strategy(d); }
+  );
+  return pss;
+}
+
 bool has_worm(const planned_strategy& ps)
 {
  return has_worm(ps.get_dice());
+}
+
+std::string to_str(const planned_strategy& ps)
+{
+  return to_str(ps.get_dice());
+}
+
+std::ostream& operator<<(std::ostream& os, const planned_strategy& ps)
+{
+  os << to_str(ps);
+  return os;
 }
 
 void test_planned_strategy()
@@ -161,5 +203,58 @@ void test_planned_strategy()
     assert(p.find(30)->second > 0.0);
     assert(p.find(35)->second > 0.0);
     assert(p.find(40)->second > 0.0);
+  }
+  // When determined to play a worm, then a 5, then a 4, then a 3
+  // the probabilities of each tile value is harder to calculate
+  //
+  {
+    const game_state gs;
+    const planned_strategy ps( { die::worm, die::five, die::four, die::three } );
+    const auto p = calc_probabilities(gs, ps);
+    const auto sum_p = sum_probabilities(p);
+    assert(is_approx_one(sum_p));
+    assert(p.find(0)->second > 0.0);
+    assert(p.find(1) == std::end(p));
+    assert(p.find(2) == std::end(p));
+    assert(p.find(3)->second > 0.0);
+    assert(p.find(4)->second > 0.0);
+    assert(p.find(5)->second > 0.0);
+    assert(p.find(6)->second > 0.0);
+    assert(p.find(7)->second > 0.0);
+    assert(p.find(8)->second > 0.0);
+    assert(p.find(9)->second > 0.0);
+    assert(p.find(10)->second > 0.0);
+    assert(p.find(11)->second > 0.0);
+    assert(p.find(12)->second > 0.0);
+    assert(p.find(13)->second > 0.0);
+    assert(p.find(14)->second > 0.0);
+    assert(p.find(15)->second > 0.0);
+    assert(p.find(16)->second > 0.0);
+    assert(p.find(17)->second > 0.0);
+    assert(p.find(18)->second > 0.0);
+    assert(p.find(19)->second > 0.0);
+    assert(p.find(20)->second > 0.0);
+    assert(p.find(25)->second > 0.0);
+    assert(p.find(30)->second > 0.0);
+    assert(p.find(35)->second > 0.0);
+    assert(p.find(40)->second > 0.0);
+  }
+  // Calculate the payoff
+  {
+    const game_state gs;
+    const planned_strategy ps( { die::worm } );
+    const double created{calc_payoff(gs, ps)};
+    const double expected{
+        (get_n_worms(0) * calc_p_x_same_of_n_dice(0, 8)) // Tile value of zero has zero worms
+      + (get_n_worms(5) * calc_p_x_same_of_n_dice(1, 8)) // Tile value of 5 has zero payoff
+      + (get_n_worms(10) * calc_p_x_same_of_n_dice(2, 8)) // Tile value of 10 has zero payoff
+      + (get_n_worms(15) * calc_p_x_same_of_n_dice(3, 8)) // Tile value of 15 has zero payoff
+      + (get_n_worms(20) * calc_p_x_same_of_n_dice(4, 8)) // Tile value of 20 has zero payoff
+      + (get_n_worms(25) * calc_p_x_same_of_n_dice(5, 8)) // Tile value of 25 has zero payoff
+      + (get_n_worms(30) * calc_p_x_same_of_n_dice(6, 8)) // Tile value of 30 has zero payoff
+      + (get_n_worms(35) * calc_p_x_same_of_n_dice(7, 8)) // Tile value of 35 has 4 worms
+      + (get_n_worms(40) * calc_p_x_same_of_n_dice(8, 8)) // Tile value of 40 has 4 worms
+    };
+    assert(created == expected);
   }
 }
