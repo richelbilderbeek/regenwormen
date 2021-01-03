@@ -8,6 +8,8 @@
 #include "strategy.h"
 #include "planned_strategy.h"
 #include "game_dialog.h"
+#include "probabilities.h"
+#include "probability.h"
 
 #include <iostream>
 #include <QApplication>
@@ -16,6 +18,8 @@ void test()
 {
   // Order should be more-or-less in increasing complexity, so that
   // the root cause of an error can be found more easily
+  test_probability();
+  test_probabilities();
   test_die();
   test_dice();
   test_tile();

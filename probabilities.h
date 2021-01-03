@@ -9,6 +9,9 @@ using probabilities = std::map<int, double>;
 /// See if the probabilities sum up to approximately one
 bool probabilities_sum_up_to_approx_one(const probabilities& p);
 
+/// Get the sum of all probabilities
+double sum_probabilities(const probabilities& p);
+
 /// Test the probabilities class
 void test_probabilities();
 

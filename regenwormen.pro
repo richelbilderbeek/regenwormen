@@ -64,9 +64,30 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 # Compile with high warning levels, a warning is an error
-QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Weffc++ -Werror
+QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror
 
-# gcov
-QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
-LIBS += -lgcov
+# Debug and release mode
+CONFIG += debug_and_release
 
+# In release mode, define NDEBUG
+CONFIG(release, debug|release) {
+
+  # Removes asserts
+  DEFINES += NDEBUG
+
+  unix {
+    # gprof, for profiling
+    QMAKE_CXXFLAGS += -pg
+    QMAKE_LFLAGS += -pg
+  }
+}
+
+# In debug mode, turn on gcov
+CONFIG(debug, debug|release) {
+
+  unix {
+    # gcov, for code coverage
+    QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+    LIBS += -lgcov
+  }
+}

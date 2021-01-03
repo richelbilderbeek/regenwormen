@@ -5,7 +5,8 @@
 #include <cassert>
 
 game::game()
-  : m_tiles{create_all_tiles()}
+  : m_turns{},
+    m_tiles{create_all_tiles()}
 {
 
 }

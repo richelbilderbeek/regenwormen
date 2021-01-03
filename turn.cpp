@@ -5,9 +5,9 @@
 #include <cassert>
 
 turn::turn(
-  const dice_selections& dice_selections,
+  const dice_selections& dss,
   const int picked_tile_value
-) : m_dice_selections{dice_selections},
+) : m_dice_selections{dss},
     m_picked_tile_value{picked_tile_value}
 {
   // Cannot pick a tile higher than the value of the dice selections

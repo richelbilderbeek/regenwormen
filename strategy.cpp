@@ -74,7 +74,7 @@ std::vector<action> create_all_valid_actions(const game_state& s)
   return valid_actions;
 }
 
-action get_best_action(const game_state& s)
+action get_best_action(const game_state& /* s */)
 {
   return create_roll_dice_action();
 }

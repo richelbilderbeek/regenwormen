@@ -14,15 +14,15 @@ bool can_get_tile(const tiles& ts, const int value)
 
 tiles create_all_tiles() noexcept
 {
-  std::vector<tile> tiles;
+  std::vector<tile> ts;
   const int min = get_lowest_tile_value();
   const int max = get_highest_tile_value() + 1; // Include the highest tile value
   for (int i = min; i != max; ++i)
   {
-    tiles.push_back(tile(i));
+    ts.push_back(tile(i));
   }
-  assert(tiles.size() == 16);
-  return tiles;
+  assert(ts.size() == 16);
+  return ts;
 }
 
 int get_n_worms(const tiles& ts) noexcept
@@ -67,8 +67,8 @@ void test_tiles()
 {
   // A standard game has 16 tiles
   {
-    const auto tiles = create_all_tiles();
-    assert(tiles.size() == 16);
+    const auto ts = create_all_tiles();
+    assert(ts.size() == 16);
   }
   // Removing the 21 tile can be done
   {
@@ -79,7 +79,7 @@ void test_tiles()
   }
   // The 16 tiles have 4 + 8 + 12 + 16 = 40 worms
   {
-    const auto tiles = create_all_tiles();
-    assert(get_n_worms(tiles) == 4 + 8 + 12 + 16);
+    const auto ts = create_all_tiles();
+    assert(get_n_worms(ts) == 4 + 8 + 12 + 16);
   }
 }
