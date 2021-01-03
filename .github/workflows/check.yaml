@@ -23,7 +23,7 @@ jobs:
         run: qmake
 
       - name: make
-        run: make --silent
+        run: make debug --silent
 
       - name: run tests
         run: ./regenwormen --test
