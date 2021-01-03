@@ -68,6 +68,14 @@ void test_die()
   static_assert (get_die_value(die::four) == 4, "a four has a value of 4");
   static_assert (get_die_value(die::five) == 5, "a five has a value of 5");
   static_assert (get_die_value(die::worm) == 5, "a worm has a value of 5");
+  // get_die_with_value
+  {
+    assert(get_die_with_value(1) == die::one);
+    assert(get_die_with_value(2) == die::two);
+    assert(get_die_with_value(3) == die::three);
+    assert(get_die_with_value(4) == die::four);
+    assert(get_die_with_value(5) == die::five);
+  }
   // One can roll each symbol, will freeze the program if this fails
   {
     const auto all_die_symbols{get_all_die_symbols()};
