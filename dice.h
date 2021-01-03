@@ -22,8 +22,22 @@ dice create_n_random_dice(const int n, std::mt19937& rng_engine);
 ///   ...
 ///   {1}
 ///   {W}
+/// To use those permutation that are useful, use 'get_all_useful_permutations'
 std::vector<dice> get_all_permutations();
 
+
+/// Get all the 1631 permutations for picking each of the six die symbols, for any number of (non-empty) die symbol set size,
+/// that have at least one worm
+/// For example:
+///   {1,2,3,4,5,W}
+///   {1,2,3,4,W,5}
+///   ...
+///   {W, 1},
+///   {1, W},
+///   ...
+///   {W}
+/// To use all permutation that re useful, use 'get_all_permutations'
+std::vector<dice> get_all_useful_permutations();
 
 /// Get all the permutations for picking each of die symbols
 std::vector<dice> get_all_permutations_for_subset(dice ds);

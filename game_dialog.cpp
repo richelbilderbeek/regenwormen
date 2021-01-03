@@ -82,11 +82,11 @@ void game_dialog::show_state(const game_state& s)
   // Show all permutations
   ss
     << std::string(80, '-') << '\n'
-    << "show all permutations:\n"
+    << "show all useful permutations:\n"
     << std::string(80, '-') << '\n'
   ;
   {
-    const auto streaks = get_all_permutations();
+    const auto streaks = get_all_useful_permutations();
     for (const auto& ds: streaks)
     {
       ss << ds << '\n';

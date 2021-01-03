@@ -25,7 +25,7 @@ std::vector<dice> get_all_permutations()
 std::vector<dice> get_all_permutations_for_subset(dice ds)
 {
   std::vector<dice> dss;
-  dss.reserve(factorial(ds.size() + 1)); //An approximation
+  dss.reserve(1956); //For 6 dice
 
   // Get all the permutations for this subset
   dss.push_back(ds);
@@ -62,6 +62,18 @@ std::vector<dice> get_all_permutations_for_subset(dice ds)
 
 
   return dss;
+}
+
+std::vector<dice> get_all_useful_permutations()
+{
+  const auto ps = get_all_permutations();
+  std::vector<dice> useful_ps;
+  std::copy_if(
+    std::begin(ps), std::end(ps),
+    std::back_inserter(useful_ps),
+    [](const auto& d) { return has_worm(d); }
+  );
+  return useful_ps;
 }
 
 bool has_die_with_symbol(const dice& d, const die symbol)
@@ -211,6 +223,10 @@ void test_dice()
     };
     static_assert(expected_size == 1956);
     assert(static_cast<int>(streaks.size()) == expected_size);
+  }
+  {
+    const auto ps = get_all_useful_permutations();
+    assert(ps.size() == 1631);
   }
   // to_str
   {

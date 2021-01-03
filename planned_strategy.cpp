@@ -1,6 +1,8 @@
 #include "planned_strategy.h"
 
 #include "probability.h"
+#include "dice_occurances.h"
+
 #include <cassert>
 
 planned_strategy::planned_strategy(const dice& ds)
@@ -9,10 +11,56 @@ planned_strategy::planned_strategy(const dice& ds)
 
 }
 
-probabilities calc_probabilities(const game_state& /* gs */, const planned_strategy& ps)
+probabilities calc_probabilities(const game_state& gs, const planned_strategy& ps)
 {
   if (!has_worm(ps)) return {{0, 1.0}};
-  return {{0, 0.0}};
+
+  //Assume a clean slate for now
+  assert(gs.get_dice().empty());
+  assert(gs.get_dice_selections().empty());
+
+  // No need to throw dice here: this is already known by the strategist
+
+  /// Create all the valid dice occurances for the planned number of throws
+  const std::vector<dice_occurances> doss = create_all_dice_occurances_for_n_throws(
+    ps.get_dice().size()
+  );
+
+  // For each of these occurances, we know the tile we'll land on
+  const std::vector<int> tile_values = calc_all_tile_values(
+    ps.get_dice(), // the predetermined dice throw, always the same
+    doss // The occurances of these dice
+  );
+  assert(doss.size() == tile_values.size());
+
+  // The probabilities for each occurance
+  const std::vector<double> dice_occurance_probabilities = get_probabilities(doss);
+  assert(doss.size() == dice_occurance_probabilities.size());
+  const double sum_dice_occurance_probabilities = std::accumulate(
+    std::begin(dice_occurance_probabilities),
+    std::end(dice_occurance_probabilities),
+    0.0
+  );
+  assert(is_approx_one(sum_dice_occurance_probabilities));
+
+  // Sum the probabilities to land on each tile
+  probabilities probs;
+  const int n = doss.size();
+  for (int i = 0; i != n; ++i)
+  {
+    const int tile_value{tile_values[i]};
+    const double p{dice_occurance_probabilities[i]};
+    if (probs.find(tile_value) == std::end(probs))
+    {
+      probs.insert(std::pair(tile_value, p));
+    }
+    else
+    {
+      probs[tile_value] += p;
+    }
+  }
+
+  return probs;
 }
 
 bool has_worm(const planned_strategy& ps)
@@ -43,12 +91,12 @@ void test_planned_strategy()
   // When selecting only a worm,
   // there is:
   //
-  if (1 == 2)
   {
     const game_state gs;
     const planned_strategy ps( { die::worm } );
     const auto p = calc_probabilities(gs, ps);
-    assert(sum_ps_is_approx_one(p));
+    const auto sum_p = sum_probabilities(p);
+    assert(is_approx_one(sum_p));
     assert(p.find(0)->second  == calc_p_x_same_of_n_dice(0, 8));
     assert(p.find(5)->second  == calc_p_x_same_of_n_dice(1, 8));
     assert(p.find(10)->second == calc_p_x_same_of_n_dice(2, 8));

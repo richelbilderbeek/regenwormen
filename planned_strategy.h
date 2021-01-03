@@ -13,9 +13,11 @@ public:
   // The dice throws are determined beforehand
   planned_strategy(const dice& ds);
 
+  /// These dice throws will be selected
   const auto& get_dice() const noexcept { return  m_dice; }
 
 private:
+  /// These dice throws will be selected
   dice m_dice;
 };
 
