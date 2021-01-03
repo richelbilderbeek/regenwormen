@@ -12,7 +12,7 @@ using dice = std::vector<die>;
 /// Create a number of random dice
 dice create_n_random_dice(const int n, std::mt19937& rng_engine);
 
-/// Get all the permutations for picking each of the six die symbols
+/// Get all the 1956 permutations for picking each of the six die symbols, for any number of (non-empty) die symbol set size
 /// For example:
 ///   {1,2,3,4,5,W}
 ///   {1,2,3,4,W,5}
