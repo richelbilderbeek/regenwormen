@@ -12,7 +12,7 @@ tile::tile(const int value)
 std::string to_str(const tile& t)
 {
   std::stringstream ss;
-  ss << get_value(t) << " (" << get_n_worms(t) << " worms)";
+  ss << get_value(t) << "|" << std::string(get_n_worms(t), 'W');
   return ss.str();
 }
 
@@ -54,5 +54,16 @@ void test_tile()
     const int value{get_lowest_tile_value()};
     const tile t(value);
     assert(get_value(t) == value);
+  }
+  // to_str
+  {
+    assert(to_str(tile(21)) == "21|W");
+    assert(to_str(tile(36)) == "36|WWWW");
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << tile(21);
+    assert(s.str() == "21|W");
   }
 }
