@@ -167,7 +167,9 @@ std::string to_str(const dice_occurances& dos)
   using namespace std;
   stringstream s;
   copy(begin(dos), end(dos), ostream_iterator<dice_occurance>(s, " "));
-  return s.str();
+  std::string str = s.str();
+  if (str.back() == ' ') str.pop_back();
+  return str;
 }
 
 std::ostream& operator<<(std::ostream& os, const dice_occurances& dos)
@@ -272,5 +274,16 @@ void test_dice_occurances()
     );
     assert(doss.size() == 37);
   }
-
+  // to_str
+  {
+    const dice_occurances dos = { 0 };
+    assert(to_str(dos) == "0");
+  }
+  // operator<<
+  {
+    const dice_occurances dos = { 0 };
+    std::stringstream s;
+    s << dos;
+    assert(s.str() == to_str(dos));
+  }
 }

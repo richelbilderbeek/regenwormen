@@ -1,3 +1,4 @@
 ignore:
   - "game_dialog.cpp"  # do not test GUI
+  - "main.cpp"  # do not main function
 

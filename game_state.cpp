@@ -102,7 +102,11 @@ bool has_obtainable_tile_with_value(const game_state& s, const int tile_value)
   assert(n_players > 1);
   for (int i = 1; i != n_players; ++i) // Start at 1, as focal player is at index 0
   {
-    if (s.get_player_tiles()[i].back().get_value() == tile_value) return true;
+    // Other player must have a tile, else look for its top value
+    if (
+          !s.get_player_tiles()[i].empty()
+      &&  s.get_player_tiles()[i].back().get_value() == tile_value
+    ) return true;
   }
   return false;
 }
@@ -265,6 +269,28 @@ void test_game_state()
     assert(s.get_dice()[1] == die::worm);
     assert(get_n_available_tiles(s) == 1);
     assert(get_value(s.get_available_tiles()[0]) == 22);
+  }
+  // Are tiles available?
+  {
+    game_state gs;
+    assert(has_available_tile_with_value(gs, 21)); // Available = is on table, in its series
+    assert(has_obtainable_tile_with_value(gs, 21)); // Obtainable = is on table, or can be got from other player
+    assert(!has_obtainable_tile_with_value(gs, 20));
+  }
+  {
+    // Throws 6 * 3 = 18, only a 1 and worm left, while there is only a 22 available
+    const tiles available_tiles = { tile(22) };
+    const tiles unavailable_tiles = {};
+    const std::vector<tiles> player_tiles = {{}, {tile(21)} };
+    const game_state gs(
+      available_tiles,
+      unavailable_tiles,
+      player_tiles
+    );
+    assert(!has_available_tile_with_value(gs, 21)); // Available = is on table, in its series
+    assert( has_available_tile_with_value(gs, 22)); // Available = is on table, in its series
+    assert(has_obtainable_tile_with_value(gs, 21)); // Obtainable = is on table, or can be got from other player
+    assert(has_obtainable_tile_with_value(gs, 22)); // Obtainable = is on table, or can be got from other player
   }
   //operator<<
   {
